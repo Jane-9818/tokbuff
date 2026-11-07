@@ -1,0 +1,8 @@
+{
+  "name": "tokbuff-public-site-tests",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "playwright-core": "1.65.0"
+  }
+}
