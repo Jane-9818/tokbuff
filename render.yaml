@@ -1,0 +1,36 @@
+# Public marketing site only.
+# Static sites on Render have no instance plan and should not set `plan`.
+# This file does not create a database, worker, key-value store, or custom domain.
+# Applying it is a separate step. It does not change DNS for the existing product host.
+services:
+  - type: web
+    name: tokbuff-public-website
+    runtime: static
+    buildCommand: echo Static site has no compile step
+    staticPublishPath: ./site
+    envVars:
+      - key: SKIP_INSTALL_DEPS
+        value: "true"
+    routes:
+      - type: redirect
+        source: /en
+        destination: /en/
+      - type: redirect
+        source: /zh
+        destination: /zh/
+      - type: redirect
+        source: /ja
+        destination: /ja/
+    headers:
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+      - path: /*
+        name: Referrer-Policy
+        value: strict-origin-when-cross-origin
+      - path: /*
+        name: X-Frame-Options
+        value: SAMEORIGIN
+      - path: /assets/*
+        name: Cache-Control
+        value: public, max-age=3600
